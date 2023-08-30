@@ -47,7 +47,19 @@ export default function SignupModal({ isOpen, setOpen }: SignupModalProps) {
 								username: string;
 								password: string;
 							}) => {
-								await axios.post('/api/signup', user);
+								const res = await fetch('/api/signup', {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json',
+									},
+									body: JSON.stringify(user),
+								});
+
+								if (!res.ok) {
+									const data = await res.json();
+									alert(data.error);
+									return;
+								}
 
 								await signIn('credentials', {
 									username: user.username,
