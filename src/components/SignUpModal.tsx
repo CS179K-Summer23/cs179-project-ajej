@@ -42,33 +42,26 @@ export default function SignupModal({ isOpen, setOpen }: SignupModalProps) {
 					<Formik
 						initialValues={{ username: '', password: '' }}
 						onSubmit={async (values: SignupType) => {
-							const useUserCreation = async (user: {
-								username: string;
-								password: string;
-							}) => {
-								const res = await fetch('/api/signup', {
-									method: 'POST',
-									headers: {
-										'Content-Type': 'application/json',
-									},
-									body: JSON.stringify(user),
-								});
+							const res = await fetch('/api/signup', {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json',
+								},
+								body: JSON.stringify(values),
+							});
 
-								if (!res.ok) {
-									const data = await res.json();
-									alert(data.error);
-									return;
-								}
+							if (!res.ok) {
+								const data = await res.json();
+								alert(data.error);
+								return;
+							}
 
-								await signIn('credentials', {
-									username: user.username,
-									password: user.password,
-								});
+							await signIn('credentials', {
+								username: values.username,
+								password: values.password,
+							});
 
-								return setSubmitted(true);
-							};
-
-							await useUserCreation(values);
+							return setSubmitted(true);
 						}}
 						validationSchema={toFormikValidationSchema(SignupSchema)}
 					>
