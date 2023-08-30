@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { Field, Form, Formik } from 'formik';
 import { useModalEscape } from '@/hooks/modal';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 
