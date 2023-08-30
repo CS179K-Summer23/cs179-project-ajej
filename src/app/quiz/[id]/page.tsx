@@ -50,6 +50,8 @@ export default function QuizPage(props: Props) {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
+				/* @ts-ignore */
+				userId: Number(session.data?.user?.id),
 				quizId: quiz?.id,
 				answers,
 			}),
@@ -160,7 +162,13 @@ export default function QuizPage(props: Props) {
 			<Navbar />
 			<div className="flex flex-col items-center min-h-screen bg-gray-100">
 				<div className="w-2/3 mt-8">
-					<h2 className="text-2xl font-medium text-slate-500">{quiz.title}</h2>
+					<a
+						href={`/quiz/${quiz.id}/leaderboard`}
+						className="text-xl border-2 px-1.5 py-0.5 rounded rounded-lg border text-slate-500 hover:text-slate-600 hover:bg-slate-200 transition ease-in-out duration-300 delay-50"
+					>
+						Leaderboard
+					</a>
+					<h2 className="text-2xl mt-3 font-medium text-slate-500">{quiz.title}</h2>
 					{session.status == 'authenticated' ? (
 						<button
 							onClick={handleLike}
